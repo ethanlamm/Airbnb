@@ -26,7 +26,7 @@ export default function Button({ label = "My Button", onClick, disabled, outline
 			{Icon && (
 				<Icon
 					size={24}
-					className="absolute letf-4 top-3"
+					className="absolute left-4 top-3"
 				/>
 			)}
 			{label}

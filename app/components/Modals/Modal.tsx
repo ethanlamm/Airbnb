@@ -31,7 +31,7 @@ export default function Modal({
 }: ModalProps) {
 	const [showModal, setShowModal] = useState(isOpen)
 
-	// 初始化、isOpen改变时，实现开关
+	// 初始化(useState时)、isOpen改变时(useEffect时)，使showModal与isOpen保持一致
 	useEffect(() => {
 		setShowModal(isOpen)
 	}, [isOpen])
@@ -39,25 +39,28 @@ export default function Modal({
 	// 实现关闭
 	const handleClose = useCallback(() => {
 		if (disabled) return
+		// showModal(自身状态) => false
 		setShowModal(false)
+		// isOpen(外部传入Props) => false
 		setTimeout(() => {
 			onClose()
 		}, 300)
 	}, [disabled, onClose])
 
-	// 实现submit
+	// 1.confirmAction
 	const handleSubmit = useCallback(() => {
 		if (disabled) return
 		onSubmit()
 	}, [disabled, onSubmit])
 
-	// secondaryAction
+	// 2.secondaryAction
 	const handleSecondaryAction = useCallback(() => {
 		if (disabled || !secondaryAction) return
 		secondaryAction()
 	}, [disabled, secondaryAction])
 
-	if (!isOpen) return null
+	// 判断是否显示，用自身局部状态 showModal
+	if (!showModal) return null
 	return (
 		<div className="flex items-center justify-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70">
 			<div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto">
@@ -96,6 +99,7 @@ export default function Modal({
 									onClick={handleSubmit}
 								/>
 							</div>
+							{footer}
 						</div>
 					</div>
 				</div>

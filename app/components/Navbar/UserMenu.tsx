@@ -4,8 +4,12 @@ import React, { useCallback, useState } from "react"
 import { AiOutlineMenu } from "react-icons/ai"
 import Avatar from "../Avatar"
 import MenuItem from "./MenuItem"
+import useRegisterModal from "@/app/hooks/useRegisterModal"
 
 export default function UserMenu() {
+	// 点击开启 RegisterModal
+	const registerModal = useRegisterModal()
+
 	const [isOpen, setIsOpen] = useState(false)
 
 	const toggle = useCallback(() => {
@@ -17,12 +21,14 @@ export default function UserMenu() {
 			<div className="flex flex-row items-center gap-3">
 				<div
 					className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
-					onClick={() => {}}>
+					onClick={() => {}}
+				>
 					Airbnb your home
 				</div>
 				<div
 					className="flex flex-row items-center gap-3 p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 rounded-full cursor-pointer hover:shadow-md transition"
-					onClick={toggle}>
+					onClick={toggle}
+				>
 					<AiOutlineMenu />
 					<div className="hidden md:block">
 						<Avatar />
@@ -37,7 +43,7 @@ export default function UserMenu() {
 							label="Login"
 						/>
 						<MenuItem
-							onClick={() => {}}
+							onClick={registerModal.onOpen}
 							label="Sign Up"
 						/>
 					</div>
