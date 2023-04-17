@@ -41,12 +41,13 @@ const authOptions: AuthOptions = {
 					where: { email: credentials.email }
 				})
 
-				if (!user || !user.hashedPassword) throw new Error("Invalid credentials")
+				if (!user || !user.hashedPassword) throw new Error("The user does not exist")
 
 				// 对比密码
-				const isCorrectPassword = await bcrypt.compare(user.hashedPassword, credentials.password)
+				// bcrypt.compare(要加密的数据，数据库的数据)
+				const isCorrectPassword = await bcrypt.compare(credentials.password, user.hashedPassword)
 
-				if (!isCorrectPassword) throw new Error("Invalid credentials")
+				if (!isCorrectPassword) throw new Error("Incorrect password")
 
 				return user
 			}
