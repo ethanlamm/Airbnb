@@ -16,7 +16,7 @@ import bcrypt from "bcrypt"
 // prisma 数据库操作
 import prisma from "@/app/libs/prismadb"
 
-const authOptions: AuthOptions = {
+export const authOptions: AuthOptions = {
 	adapter: PrismaAdapter(prisma),
 	providers: [
 		GoogleProvider({

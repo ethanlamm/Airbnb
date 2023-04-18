@@ -1,5 +1,4 @@
-// "use client"
-
+// server component as default
 import "./globals.css"
 
 import ClientOnly from "./components/ClientOnly"
@@ -8,8 +7,7 @@ import RegisterModal from "./components/Modals/RegisterModal"
 import LoginModal from "./components/Modals/LoginModal"
 import ToasterProvider from "./providers/ToasterProvider"
 
-// import useRegisterModal from "./hooks/useRegisterModal"
-// import useLoginModal from "./hooks/useLoginModal"
+import getCurrentUser from "./actions/getCurrentUser"
 
 import { Inter } from "next/font/google"
 const inter = Inter({ subsets: ["latin"] })
@@ -19,9 +17,8 @@ export const metadata = {
 	description: "Airbnb Clone"
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-	// const registerModal = useRegisterModal()
-	// const loginModal = useLoginModal()
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+	const currentUser = await getCurrentUser()
 
 	return (
 		<html lang="en">
@@ -30,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<ToasterProvider />
 					<RegisterModal />
 					<LoginModal />
-					<Navbar />
+					<Navbar currentUser={currentUser} />
 				</ClientOnly>
 				{children}
 			</body>
