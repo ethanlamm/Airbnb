@@ -115,12 +115,12 @@ export default function LoginModal() {
 			/>
 			<div className="text-neutral-500 text-center mt-4 font-light">
 				<div className="flex flex-row justify-center items-center gap-2">
-					<div>Don't have an account?</div>
+					<div>First time using Airbnb?</div>
 					<div
 						className="text-neutral-800 cursor-pointer hover:underline"
 						onClick={goToRegister}
 					>
-						Register
+						Create an account
 					</div>
 				</div>
 			</div>
