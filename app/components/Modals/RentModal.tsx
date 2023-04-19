@@ -11,6 +11,7 @@ import CategoryInput from "../Inputs/CategoryInput"
 import CountrySelect from "../Inputs/CountrySelect"
 import Map from "../Map"
 import Counter from "../Inputs/Counter"
+import ImageUpload from "../Inputs/ImageUpload"
 
 enum STEPS {
 	CATEGORY,
@@ -183,6 +184,27 @@ export default function RentModal() {
 					subtitle="How many bathrooms do you have?"
 					value={selectedBathroomCount}
 					onChange={selectBathroomCount}
+				/>
+			</div>
+		)
+	}
+
+	// --------------------- STEP 4 INAGES --------------------------
+	const selectedImageSrc = watch("imageSrc")
+	const selectImageSrc = useCallback((imageSrc: string) => {
+		setCustomValue("imageSrc", imageSrc)
+	}, [])
+
+	if (step === STEPS.IMAGES) {
+		bodyContent = (
+			<div className="flex flex-col gap-8">
+				<Heading
+					title="Add a photo of your place"
+					subtitle="Show guests what your place looks like!"
+				/>
+				<ImageUpload
+					value={selectedImageSrc}
+					onChange={selectImageSrc}
 				/>
 			</div>
 		)
