@@ -17,8 +17,6 @@ interface ImageUploadProps {
 
 export default function ImageUpload({ value, onChange }: ImageUploadProps) {
 	const handleUpload = useCallback((res: any) => {
-		console.log(res)
-
 		onChange(res.info.secure_url)
 	}, [])
 
@@ -30,7 +28,7 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
 		>
 			{({ open }) => (
 				<div
-					onClick={() => open?.()}
+					onClick={() => open && open()}
 					className="relative flex flex-col justify-center items-center gap-4 cursor-pointer hover:opacity-70 border-dashed border-2 border-neutral-300 text-neutral-600 p-20 "
 				>
 					<TbPhotoPlus size={50} />
