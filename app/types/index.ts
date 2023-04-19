@@ -6,3 +6,12 @@ export type SafeUser = Omit<User, "createdAt" | "updatedAt" | "emailVerified"> &
 	updatedAt: string
 	emailVerified: string | null
 }
+
+// Country Type
+export type Country = {
+	value: string
+	label: string
+	flag: string
+	latlng: number[]
+	region: string
+}

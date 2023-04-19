@@ -6,7 +6,10 @@ import useRentModal from "@/app/hooks/useRenModal"
 import Heading from "../Heading"
 import { categories } from "../Navbar/Categories"
 import { FieldValues, useForm } from "react-hook-form"
+import type { Country } from "@/app/types"
 import CategoryInput from "../Inputs/CategoryInput"
+import CountrySelect from "../Inputs/CountrySelect"
+import Map from "../Map"
 
 enum STEPS {
 	CATEGORY,
@@ -19,6 +22,13 @@ enum STEPS {
 
 export default function RentModal() {
 	const rentModal = useRentModal()
+
+	const handleClose = useCallback(() => {
+		rentModal.onClose()
+		// 重置
+		setStep(STEPS.CATEGORY)
+		reset()
+	}, [])
 
 	// --------------------- Next & Back --------------------------
 	const [step, setStep] = useState(STEPS.CATEGORY)
@@ -104,11 +114,38 @@ export default function RentModal() {
 		</div>
 	)
 
+	// --------------------- STEP 2 LOCATION --------------------------
+	const selectedLocation = watch("location")
+
+	const selectLocation = useCallback((location: Country) => {
+		setCustomValue("location", location)
+	}, [])
+
+	if (step === STEPS.LOCATION) {
+		bodyContent = (
+			<div className="flex flex-col gap-8">
+				<Heading
+					title="Where is your place located?"
+					subtitle="Help guests find you!"
+				/>
+				<CountrySelect
+					value={selectedLocation}
+					onChange={selectLocation}
+				/>
+				{/* 需要key传给Map，选择了不同位置需要重新加载Map组件 */}
+				<Map
+					center={selectedLocation?.latlng}
+					key={selectedLocation?.latlng}
+				/>
+			</div>
+		)
+	}
+
 	return (
 		<Modal
 			title="Airbnb your home!"
 			isOpen={rentModal.isOpen}
-			onClose={rentModal.onClose}
+			onClose={handleClose}
 			actionLabel={actionLabel}
 			onSubmit={onNext}
 			secondaryActionLabel={secondaryActionLabel}
