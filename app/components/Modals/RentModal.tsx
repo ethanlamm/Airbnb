@@ -12,6 +12,7 @@ import CountrySelect from "../Inputs/CountrySelect"
 import Map from "../Map"
 import Counter from "../Inputs/Counter"
 import ImageUpload from "../Inputs/ImageUpload"
+import Input from "../Inputs/Input"
 
 enum STEPS {
 	CATEGORY,
@@ -23,6 +24,7 @@ enum STEPS {
 }
 
 export default function RentModal() {
+	const [isLoading, setIsLoading] = useState(false)
 	const rentModal = useRentModal()
 
 	const handleClose = useCallback(() => {
@@ -205,6 +207,56 @@ export default function RentModal() {
 				<ImageUpload
 					value={selectedImageSrc}
 					onChange={selectImageSrc}
+				/>
+			</div>
+		)
+	}
+
+	// --------------------- STEP 5 DESCRIPTION PRICE --------------------------
+	if (step === STEPS.DESCRIPTION) {
+		bodyContent = (
+			<div className="flex flex-col gap-8">
+				<Heading
+					title="How would you describe your place?"
+					subtitle="Short and sweet works best!"
+				/>
+				<Input
+					id="title"
+					label="Title"
+					disabled={isLoading}
+					register={register}
+					errors={errors}
+					required
+				/>
+				<hr />
+				<Input
+					id="description"
+					label="Description"
+					disabled={isLoading}
+					register={register}
+					errors={errors}
+					required
+				/>
+			</div>
+		)
+	}
+
+	if (step === STEPS.PRICE) {
+		bodyContent = (
+			<div className="flex flex-col gap-8">
+				<Heading
+					title="Now, set your price"
+					subtitle="How much do you charge per night?"
+				/>
+				<Input
+					id="price"
+					label="Price"
+					formatPrice
+					type="number"
+					disabled={isLoading}
+					register={register}
+					errors={errors}
+					required
 				/>
 			</div>
 		)
