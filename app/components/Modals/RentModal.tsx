@@ -10,6 +10,7 @@ import type { Country } from "@/app/types"
 import CategoryInput from "../Inputs/CategoryInput"
 import CountrySelect from "../Inputs/CountrySelect"
 import Map from "../Map"
+import Counter from "../Inputs/Counter"
 
 enum STEPS {
 	CATEGORY,
@@ -136,6 +137,52 @@ export default function RentModal() {
 				<Map
 					center={selectedLocation?.latlng}
 					key={selectedLocation?.latlng}
+				/>
+			</div>
+		)
+	}
+
+	// --------------------- STEP 3 GUESTCOUNT ROOMCOUNT BATHROOMCOUNT --------------------------
+	const selectedGuestCount = watch("guestCount")
+	const selectedRoomCount = watch("roomCount")
+	const selectedBathroomCount = watch("bathroomCount")
+
+	const selectGuestCount = useCallback((guestCount: number) => {
+		setCustomValue("guestCount", guestCount)
+	}, [])
+
+	const selectRoomCount = useCallback((roomCount: number) => {
+		setCustomValue("roomCount", roomCount)
+	}, [])
+	const selectBathroomCount = useCallback((bathroomCount: number) => {
+		setCustomValue("bathroomCount", bathroomCount)
+	}, [])
+	if (step === STEPS.INFO) {
+		bodyContent = (
+			<div className="flex flex-col gap-8">
+				<Heading
+					title="Share some basics about your place"
+					subtitle="What amenitis do you have?"
+				/>
+				<Counter
+					title="Guests"
+					subtitle="How many guests do you allow?"
+					value={selectedGuestCount}
+					onChange={selectGuestCount}
+				/>
+				<hr />
+				<Counter
+					title="Rooms"
+					subtitle="How many rooms do you have?"
+					value={selectedRoomCount}
+					onChange={selectRoomCount}
+				/>
+				<hr />
+				<Counter
+					title="Bathrooms"
+					subtitle="How many bathrooms do you have?"
+					value={selectedBathroomCount}
+					onChange={selectBathroomCount}
 				/>
 			</div>
 		)
