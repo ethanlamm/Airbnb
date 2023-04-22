@@ -3,7 +3,7 @@
 import axios from "axios"
 import React, { useCallback, useMemo, useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { safeListing, SafeUser, safeReservations } from "@/app/types"
+import { safeListing, SafeUser, safeReservation } from "@/app/types"
 import { categories } from "../Navbar/Categories"
 import Container from "../Container"
 import ListingHead from "./ListingHead"
@@ -18,7 +18,7 @@ import { differenceInCalendarDays, eachDayOfInterval } from "date-fns"
 interface ListingClientProps {
 	listing: safeListing & { user: SafeUser }
 	currentUser: SafeUser | null
-	reservations?: safeReservations[]
+	reservations?: safeReservation[]
 }
 
 const initialDateRange = {
@@ -92,7 +92,7 @@ export default function ListingClient({ listing, currentUser, reservations = [] 
 				setDateRange(initialDateRange)
 
 				// redictTo /trips
-				router.refresh()
+				router.push("/trips")
 			})
 			.catch(() => {
 				toast.error("Something went wrong")

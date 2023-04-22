@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useCallback, useState } from "react"
+import { useRouter } from "next/navigation"
 import { AiOutlineMenu } from "react-icons/ai"
 import Avatar from "../Avatar"
 import MenuItem from "./MenuItem"
@@ -17,6 +18,7 @@ interface UserMenuProps {
 }
 
 export default function UserMenu({ currentUser }: UserMenuProps) {
+	const router = useRouter()
 	// 点击开启 RegisterModal
 	const registerModal = useRegisterModal()
 	const loginModal = useLoginModal()
@@ -61,7 +63,7 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 						{currentUser ? (
 							<>
 								<MenuItem
-									onClick={() => {}}
+									onClick={() => router.push("/trips")}
 									label="My trips"
 								/>
 								<MenuItem
