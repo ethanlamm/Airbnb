@@ -78,7 +78,7 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 									label="My reservations"
 								/>
 								<MenuItem
-									onClick={() => {}}
+									onClick={(e) => toggleMenu(e, () => router.push("/properties"))}
 									label="My properties"
 								/>
 								<MenuItem
