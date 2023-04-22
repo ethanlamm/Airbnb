@@ -70,7 +70,7 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 									label="My trips"
 								/>
 								<MenuItem
-									onClick={() => {}}
+									onClick={(e) => toggleMenu(e, () => router.push("/favorites"))}
 									label="My favorites"
 								/>
 								<MenuItem
