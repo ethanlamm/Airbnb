@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useState, MouseEvent } from "react"
 import { useRouter } from "next/navigation"
 import { AiOutlineMenu } from "react-icons/ai"
 import Avatar from "../Avatar"
@@ -26,8 +26,11 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 
 	const [isOpen, setIsOpen] = useState(false)
 
-	const toggle = useCallback(() => {
+	const toggleMenu = useCallback((e: MouseEvent<HTMLDivElement>, cb?: Function) => {
+		e.stopPropagation
+		// 关闭菜单
 		setIsOpen((pre) => !pre)
+		cb && cb()
 	}, [])
 
 	const onRent = useCallback(() => {
@@ -49,7 +52,7 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 				</div>
 				<div
 					className="flex flex-row items-center gap-3 p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 rounded-full cursor-pointer hover:shadow-md transition"
-					onClick={toggle}
+					onClick={toggleMenu}
 				>
 					<AiOutlineMenu />
 					<div className="hidden md:block">
@@ -63,7 +66,7 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 						{currentUser ? (
 							<>
 								<MenuItem
-									onClick={() => router.push("/trips")}
+									onClick={(e) => toggleMenu(e, () => router.push("/trips"))}
 									label="My trips"
 								/>
 								<MenuItem
@@ -71,7 +74,7 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 									label="My favorites"
 								/>
 								<MenuItem
-									onClick={() => router.push("/reservations")}
+									onClick={(e) => toggleMenu(e, () => router.push("/reservations"))}
 									label="My reservations"
 								/>
 								<MenuItem
@@ -79,23 +82,23 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 									label="My properties"
 								/>
 								<MenuItem
-									onClick={rentModal.onOpen}
+									onClick={(e) => toggleMenu(e, rentModal.onOpen)}
 									label="Airbnb my home"
 								/>
 								<hr />
 								<MenuItem
-									onClick={() => signOut()}
+									onClick={(e) => toggleMenu(e, signOut)}
 									label="Logout"
 								/>
 							</>
 						) : (
 							<>
 								<MenuItem
-									onClick={loginModal.onOpen}
+									onClick={(e) => toggleMenu(e, loginModal.onOpen)}
 									label="Login"
 								/>
 								<MenuItem
-									onClick={registerModal.onOpen}
+									onClick={(e) => toggleMenu(e, registerModal.onOpen)}
 									label="Sign Up"
 								/>
 							</>
