@@ -3,8 +3,7 @@
 import axios from "axios"
 import React, { useCallback, useMemo, useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { safeListing, SafeUser } from "@/app/types"
-import { Reservation } from "@prisma/client"
+import { safeListing, SafeUser, safeReservations } from "@/app/types"
 import { categories } from "../Navbar/Categories"
 import Container from "../Container"
 import ListingHead from "./ListingHead"
@@ -19,7 +18,7 @@ import { differenceInCalendarDays, eachDayOfInterval } from "date-fns"
 interface ListingClientProps {
 	listing: safeListing & { user: SafeUser }
 	currentUser: SafeUser | null
-	reservations?: Reservation[]
+	reservations?: safeReservations[]
 }
 
 const initialDateRange = {
@@ -55,9 +54,10 @@ export default function ListingClient({ listing, currentUser, reservations = [] 
 
 		return dates
 	}, [reservations])
+	// console.log("disabledDates", disabledDates)
 
 	const handleChangeDate = useCallback((value: Range) => {
-		// console.log('Range',value)
+		// console.log("Range", value)
 		setDateRange(value)
 	}, [])
 
@@ -74,8 +74,14 @@ export default function ListingClient({ listing, currentUser, reservations = [] 
 
 		setIsLoading(true)
 
+		/**
+		 * 时间问题：选择时间/展示时间 与 数据库存储时间 不一致
+		 * 1.提交(POST)时，startDate、endDate都是 Date 对象；在提交到PrismaClient DateTime(格式)时，Prisma会自动调用 toISOString()方法，会转换为少了8小时的时间
+		 * 2.获取(GET)时，在 disabledDate 中，使用了 new Date(date)方法，当date中有前导零时，会将传入值转换为多8小时的时间(https://segmentfault.com/a/1190000022403847)
+		 * 3.所以，前端选择的时间与展示的时间一致，数据库存储的时间 比 选择时间/展示时间 少8小时
+		 */
 		axios
-			.post("/api/reservation", {
+			.post("/api/reservations", {
 				listingId: listing.id,
 				totalPrice,
 				startDate: dateRange.startDate,
@@ -94,7 +100,7 @@ export default function ListingClient({ listing, currentUser, reservations = [] 
 			.finally(() => {
 				setIsLoading(false)
 			})
-	}, [currentUser, loginModal, listing.id, dateRange])
+	}, [currentUser, loginModal, listing.id, totalPrice, dateRange])
 
 	return (
 		<Container>
