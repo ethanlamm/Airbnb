@@ -9,6 +9,17 @@ export default async function FavoritePage() {
 	const favoriteListings = await getFavoriteListings()
 	const currentUser = await getCurrentUser()
 
+	if (!currentUser) {
+		return (
+			<ClientOnly>
+				<EmptyState
+					title="Unauthorized"
+					subtitle="Please login"
+				/>
+			</ClientOnly>
+		)
+	}
+
 	if (!favoriteListings.length) {
 		return (
 			<ClientOnly>
