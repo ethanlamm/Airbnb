@@ -18,7 +18,7 @@ export default function PropertiesClient({ propertyListings, currentUser }: Prop
 	const router = useRouter()
 	const [deleteId, setDeleteId] = useState("")
 
-	const onCancel = useCallback((id: string) => {
+	const onDelete = useCallback((id: string) => {
 		setDeleteId(id)
 
 		axios
@@ -45,7 +45,7 @@ export default function PropertiesClient({ propertyListings, currentUser }: Prop
 					<ListingCard
 						key={propertyListing.id}
 						data={propertyListing}
-						onAction={onCancel}
+						onAction={onDelete}
 						actionId={propertyListing.id}
 						actionLabel="Delete property"
 						disabled={deleteId == propertyListing.id}
