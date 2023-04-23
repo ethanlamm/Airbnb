@@ -16,9 +16,12 @@ interface ImageUploadProps {
 }
 
 export default function ImageUpload({ value, onChange }: ImageUploadProps) {
-	const handleUpload = useCallback((res: any) => {
-		onChange(res.info.secure_url)
-	}, [])
+	const handleUpload = useCallback(
+		(res: any) => {
+			onChange(res.info.secure_url)
+		},
+		[onChange]
+	)
 
 	return (
 		<CldUploadWidget

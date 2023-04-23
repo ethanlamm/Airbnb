@@ -31,13 +31,6 @@ export default function RentModal() {
 	const [isLoading, setIsLoading] = useState(false)
 	const rentModal = useRentModal()
 
-	const handleClose = useCallback(() => {
-		rentModal.onClose()
-		// 重置
-		setStep(STEPS.CATEGORY)
-		reset()
-	}, [])
-
 	// --------------------- Next & Back --------------------------
 	const [step, setStep] = useState(STEPS.CATEGORY)
 
@@ -81,22 +74,36 @@ export default function RentModal() {
 	})
 
 	// useForm：1）setValue：修改值  2）watch：监视值
-	const setCustomValue = (id: string, value: any) => {
-		setValue(id, value, {
-			shouldValidate: true,
-			shouldDirty: true,
-			shouldTouch: true
-		})
-	}
+	const setCustomValue = useCallback(
+		(id: string, value: any) => {
+			setValue(id, value, {
+				shouldValidate: true,
+				shouldDirty: true,
+				shouldTouch: true
+			})
+		},
+		[setValue]
+	)
+
+	// handleClose
+	const handleClose = useCallback(() => {
+		rentModal.onClose()
+		// 重置
+		setStep(STEPS.CATEGORY)
+		reset()
+	}, [rentModal, reset])
 
 	// --------------------- STEP 1 CATEGORY(DEFAULT) --------------------------
 	const selectedCategory = watch("category")
 
 	// 父组件传入函数，子组件调用传值
-	const selectCategory = useCallback((category: string) => {
-		// console.log(category)
-		setCustomValue("category", category)
-	}, [])
+	const selectCategory = useCallback(
+		(category: string) => {
+			// console.log(category)
+			setCustomValue("category", category)
+		},
+		[setCustomValue]
+	)
 
 	let bodyContent = (
 		<div className="flex flex-col gap-8">
@@ -125,9 +132,12 @@ export default function RentModal() {
 	// --------------------- STEP 2 LOCATION --------------------------
 	const selectedLocation = watch("location")
 
-	const selectLocation = useCallback((location: Country) => {
-		setCustomValue("location", location)
-	}, [])
+	const selectLocation = useCallback(
+		(location: Country) => {
+			setCustomValue("location", location)
+		},
+		[setCustomValue]
+	)
 
 	if (step === STEPS.LOCATION) {
 		bodyContent = (
@@ -154,16 +164,25 @@ export default function RentModal() {
 	const selectedRoomCount = watch("roomCount")
 	const selectedBathroomCount = watch("bathroomCount")
 
-	const selectGuestCount = useCallback((guestCount: number) => {
-		setCustomValue("guestCount", guestCount)
-	}, [])
+	const selectGuestCount = useCallback(
+		(guestCount: number) => {
+			setCustomValue("guestCount", guestCount)
+		},
+		[setCustomValue]
+	)
 
-	const selectRoomCount = useCallback((roomCount: number) => {
-		setCustomValue("roomCount", roomCount)
-	}, [])
-	const selectBathroomCount = useCallback((bathroomCount: number) => {
-		setCustomValue("bathroomCount", bathroomCount)
-	}, [])
+	const selectRoomCount = useCallback(
+		(roomCount: number) => {
+			setCustomValue("roomCount", roomCount)
+		},
+		[setCustomValue]
+	)
+	const selectBathroomCount = useCallback(
+		(bathroomCount: number) => {
+			setCustomValue("bathroomCount", bathroomCount)
+		},
+		[setCustomValue]
+	)
 	if (step === STEPS.INFO) {
 		bodyContent = (
 			<div className="flex flex-col gap-8">
@@ -197,9 +216,12 @@ export default function RentModal() {
 
 	// --------------------- STEP 4 INAGES --------------------------
 	const selectedImageSrc = watch("imageSrc")
-	const selectImageSrc = useCallback((imageSrc: string) => {
-		setCustomValue("imageSrc", imageSrc)
-	}, [])
+	const selectImageSrc = useCallback(
+		(imageSrc: string) => {
+			setCustomValue("imageSrc", imageSrc)
+		},
+		[setCustomValue]
+	)
 
 	if (step === STEPS.IMAGES) {
 		bodyContent = (
