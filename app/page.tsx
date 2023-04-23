@@ -6,8 +6,11 @@ import Container from "./components/Container"
 import EmptyState from "./components/EmptyState"
 import ListingCard from "./components/Listings/ListingCard"
 
-export default async function Home() {
-	const listings = await getListings()
+import type { IListingsParams } from "./actions/getListings"
+
+export default async function Home({ searchParams }: { searchParams: IListingsParams }) {
+	// 根据查询字符串 getListings
+	const listings = await getListings(searchParams)
 	const currentUser = await getCurrentUser()
 
 	if (!listings.length) {

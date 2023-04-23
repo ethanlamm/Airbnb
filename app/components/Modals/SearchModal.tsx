@@ -161,7 +161,7 @@ export default function SearchModal() {
 			updateQuery.startDate = formatISO(dateRange.startDate)
 		}
 		if (dateRange.endDate) {
-			updateQuery.startDate = formatISO(dateRange.endDate)
+			updateQuery.endDate = formatISO(dateRange.endDate)
 		}
 
 		const url = queryString.stringifyUrl(
