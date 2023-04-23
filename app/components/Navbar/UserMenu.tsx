@@ -98,7 +98,7 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 								<hr />
 								<MenuItem
 									// onClick={(e) => toggleMenu(e, signOut)}
-									onClick={() => signOut}
+									onClick={() => signOut()}
 									label="Logout"
 								/>
 							</>

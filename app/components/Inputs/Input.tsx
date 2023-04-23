@@ -25,13 +25,6 @@ export default function Input({
 	register,
 	errors
 }: InputProps) {
-	const [haveError, setHaveError] = useState(Boolean(errors[id]?.message))
-	useEffect(() => {
-		if ((errors[id]?.message as string) == "") {
-			setHaveError(true)
-		}
-	}, [errors[id]?.message])
-
 	return (
 		<div className="w-full relative">
 			{formatPrice && (
@@ -73,7 +66,7 @@ export default function Input({
 			>
 				{label}
 			</label>
-			{errors[id] && <div className="pl-3">{errors[id]?.message as string}</div>}
+			{errors && errors[id] && errors[id]?.message && <div className="pl-3">{errors[id]?.message as string}</div>}
 		</div>
 	)
 }
