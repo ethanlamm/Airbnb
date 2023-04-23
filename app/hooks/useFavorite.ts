@@ -44,7 +44,7 @@ export default function useFavorite({ listingId, currentUser }: IUseFavorite) {
 				toast.error("Something went wrong")
 			}
 		},
-		[currentUser, listingId, isfavorite]
+		[currentUser, loginModal, listingId, isfavorite, router]
 	)
 
 	return { isfavorite, toggleFavorite }
