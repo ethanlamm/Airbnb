@@ -18,22 +18,25 @@ export default function PropertiesClient({ propertyListings, currentUser }: Prop
 	const router = useRouter()
 	const [deleteId, setDeleteId] = useState("")
 
-	const onDelete = useCallback((id: string) => {
-		setDeleteId(id)
+	const onDelete = useCallback(
+		(id: string) => {
+			setDeleteId(id)
 
-		axios
-			.delete(`/api/listings/${id}`)
-			.then(() => {
-				toast.success("Property deleted")
-				router.refresh()
-			})
-			.catch((error: any) => {
-				toast.error(error?.response?.data?.error)
-			})
-			.finally(() => {
-				setDeleteId("")
-			})
-	}, [])
+			axios
+				.delete(`/api/listings/${id}`)
+				.then(() => {
+					toast.success("Property deleted")
+					router.refresh()
+				})
+				.catch((error: any) => {
+					toast.error(error?.response?.data?.error)
+				})
+				.finally(() => {
+					setDeleteId("")
+				})
+		},
+		[router]
+	)
 	return (
 		<Container>
 			<Heading

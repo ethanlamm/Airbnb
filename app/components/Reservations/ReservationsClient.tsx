@@ -19,22 +19,25 @@ export default function ReservationsClient({ reservations, currentUser }: Reserv
 	const [deleteId, setDeleteId] = useState("")
 
 	// 取消客户预约
-	const onCancel = useCallback((id: string) => {
-		setDeleteId(id)
+	const onCancel = useCallback(
+		(id: string) => {
+			setDeleteId(id)
 
-		axios
-			.delete(`/api/reservations/${id}`)
-			.then(() => {
-				toast.success("Reservation canceled")
-				router.refresh()
-			})
-			.catch((error: any) => {
-				toast.error(error?.response?.data?.error)
-			})
-			.finally(() => {
-				setDeleteId("")
-			})
-	}, [])
+			axios
+				.delete(`/api/reservations/${id}`)
+				.then(() => {
+					toast.success("Reservation canceled")
+					router.refresh()
+				})
+				.catch((error: any) => {
+					toast.error(error?.response?.data?.error)
+				})
+				.finally(() => {
+					setDeleteId("")
+				})
+		},
+		[router]
+	)
 
 	return (
 		<Container>

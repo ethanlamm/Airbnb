@@ -18,22 +18,25 @@ export default function TripsClient({ reservations, currentUser }: TripPageProps
 	const router = useRouter()
 	const [deleteId, setDeleteId] = useState("")
 
-	const onCancel = useCallback((id: string) => {
-		setDeleteId(id)
+	const onCancel = useCallback(
+		(id: string) => {
+			setDeleteId(id)
 
-		axios
-			.delete(`/api/reservations/${id}`)
-			.then(() => {
-				toast.success("Reservation canceled")
-				router.refresh()
-			})
-			.catch((error: any) => {
-				toast.error(error?.response?.data?.error)
-			})
-			.finally(() => {
-				setDeleteId("")
-			})
-	}, [])
+			axios
+				.delete(`/api/reservations/${id}`)
+				.then(() => {
+					toast.success("Reservation canceled")
+					router.refresh()
+				})
+				.catch((error: any) => {
+					toast.error(error?.response?.data?.error)
+				})
+				.finally(() => {
+					setDeleteId("")
+				})
+		},
+		[router]
+	)
 	return (
 		<Container>
 			<Heading
