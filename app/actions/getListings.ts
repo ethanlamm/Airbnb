@@ -43,8 +43,9 @@ export default async function getListings(params: IListingsParams) {
 				reservations: {
 					some: {
 						OR: [
-							{ endDate: { gte: startDate }, startDate: { lte: startDate } },
-							{ startDate: { lte: endDate }, endDate: { gte: endDate } }
+							{ startDate: { lte: startDate }, endDate: { gte: startDate } },
+							{ startDate: { lte: endDate }, endDate: { gte: endDate } },
+							{ startDate: { gte: startDate }, endDate: { lte: endDate } }
 						]
 					}
 				}
