@@ -24,10 +24,13 @@ export default function ListingReservation({
 	isLoading,
 	disabledDates
 }: ListingReservationProps) {
-	const handleChange = useCallback((value: RangeKeyDict) => {
-		// console.log('RangeKeyDict',value)
-		onChangeDate(value.selection)
-	}, [])
+	const handleChange = useCallback(
+		(value: RangeKeyDict) => {
+			// console.log('RangeKeyDict',value)
+			onChangeDate(value.selection)
+		},
+		[onChangeDate]
+	)
 
 	return (
 		<div className="bg-white rounded-xl border-[1px] border-neutral-200 overflow-hidden">

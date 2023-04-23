@@ -100,7 +100,7 @@ export default function ListingClient({ listing, currentUser, reservations = [] 
 			.finally(() => {
 				setIsLoading(false)
 			})
-	}, [currentUser, loginModal, listing.id, totalPrice, dateRange])
+	}, [currentUser, loginModal, listing, totalPrice, dateRange, router])
 
 	return (
 		<Container>
