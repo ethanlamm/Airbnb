@@ -68,7 +68,7 @@ export default function SearchModal() {
 		setRoomCount(1)
 		setBathroomCount(1)
 		setDateRange(initialDateRange)
-	}, [])
+	}, [searchModal])
 
 	// --------------------- STEP 1 LOCATION(DEFALUT) --------------------------
 	let bodyContent = (
@@ -176,7 +176,7 @@ export default function SearchModal() {
 		handleClose()
 		// 改变URL
 		router.push(url)
-	}, [step, onNext, searchParams, location, guestCount, roomCount, bathroomCount, dateRange, searchModal, handleClose])
+	}, [step, onNext, searchParams, location, guestCount, roomCount, bathroomCount, dateRange, handleClose, router])
 
 	return (
 		<Modal

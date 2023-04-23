@@ -57,13 +57,13 @@ export default function RegisterModal() {
 		registerModal.onClose()
 		// 每次关闭都要重置Form
 		reset()
-	}, [])
+	}, [registerModal, reset])
 
 	// switchTo LoginModal
 	const goToLogin = useCallback(() => {
 		handleClose()
 		loginModal.onOpen()
-	}, [handleClose])
+	}, [handleClose, loginModal])
 
 	const bodyContent = (
 		<div className="flex flex-col gap-4">
