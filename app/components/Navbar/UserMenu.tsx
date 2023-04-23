@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useState, MouseEvent } from "react"
+import React, { useCallback, useState, MouseEvent, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { AiOutlineMenu } from "react-icons/ai"
 import Avatar from "../Avatar"
@@ -13,6 +13,8 @@ import { signOut } from "next-auth/react"
 
 import { SafeUser } from "@/app/types"
 
+import useClickOutside from "@/app/hooks/useClickOutside"
+
 interface UserMenuProps {
 	currentUser?: SafeUser | null
 }
@@ -24,14 +26,16 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 	const loginModal = useLoginModal()
 	const rentModal = useRentModal()
 
-	const [isOpen, setIsOpen] = useState(false)
+	// const [isOpen, setIsOpen] = useState(false)
 
-	const toggleMenu = useCallback((e: MouseEvent<HTMLDivElement>, cb?: Function) => {
-		e.stopPropagation
-		// 关闭菜单
-		setIsOpen((pre) => !pre)
-		cb && cb()
-	}, [])
+	const { ref, isOpen } = useClickOutside()
+
+	// const toggleMenu = useCallback((e: MouseEvent<HTMLDivElement>, cb?: Function) => {
+	// 	e.stopPropagation
+	// 	// 关闭菜单
+	// 	setIsOpen((pre) => !pre)
+	// 	cb && cb()
+	// }, [])
 
 	const onRent = useCallback(() => {
 		// 未登录，先登录 => LoginModal
@@ -52,7 +56,8 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 				</div>
 				<div
 					className="flex flex-row items-center gap-3 p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 rounded-full cursor-pointer hover:shadow-md transition"
-					onClick={toggleMenu}
+					// onClick={() => setIsOpen((pre) => !pre)}
+					ref={ref}
 				>
 					<AiOutlineMenu />
 					<div className="hidden md:block">
@@ -66,39 +71,47 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 						{currentUser ? (
 							<>
 								<MenuItem
-									onClick={(e) => toggleMenu(e, () => router.push("/trips"))}
+									// onClick={(e) => toggleMenu(e, () => router.push("/trips"))}
+									onClick={() => router.push("/trips")}
 									label="My trips"
 								/>
 								<MenuItem
-									onClick={(e) => toggleMenu(e, () => router.push("/favorites"))}
+									// onClick={(e) => toggleMenu(e, () => router.push("/favorites"))}
+									onClick={() => router.push("/favorites")}
 									label="My favorites"
 								/>
 								<MenuItem
-									onClick={(e) => toggleMenu(e, () => router.push("/reservations"))}
+									// onClick={(e) => toggleMenu(e, () => router.push("/reservations"))}
+									onClick={() => router.push("/reservations")}
 									label="My reservations"
 								/>
 								<MenuItem
-									onClick={(e) => toggleMenu(e, () => router.push("/properties"))}
+									// onClick={(e) => toggleMenu(e, () => router.push("/properties"))}
+									onClick={() => router.push("/properties")}
 									label="My properties"
 								/>
 								<MenuItem
-									onClick={(e) => toggleMenu(e, rentModal.onOpen)}
+									// onClick={(e) => toggleMenu(e, rentModal.onOpen)}
+									onClick={rentModal.onOpen}
 									label="Airbnb my home"
 								/>
 								<hr />
 								<MenuItem
-									onClick={(e) => toggleMenu(e, signOut)}
+									// onClick={(e) => toggleMenu(e, signOut)}
+									onClick={() => signOut}
 									label="Logout"
 								/>
 							</>
 						) : (
 							<>
 								<MenuItem
-									onClick={(e) => toggleMenu(e, loginModal.onOpen)}
+									// onClick={(e) => toggleMenu(e, loginModal.onOpen)}
+									onClick={loginModal.onOpen}
 									label="Login"
 								/>
 								<MenuItem
-									onClick={(e) => toggleMenu(e, registerModal.onOpen)}
+									// onClick={(e) => toggleMenu(e, registerModal.onOpen)}
+									onClick={registerModal.onOpen}
 									label="Sign Up"
 								/>
 							</>
