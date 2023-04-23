@@ -43,7 +43,7 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
 
 		// 已登录 => RentModal
 		rentModal.onOpen()
-	}, [])
+	}, [currentUser, loginModal, rentModal])
 
 	return (
 		<div className="relative">

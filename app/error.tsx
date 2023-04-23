@@ -8,16 +8,9 @@ interface ErrorProps {
 }
 
 export default function Error({ error }: ErrorProps) {
-	let timmer: any = undefined
 	useEffect(() => {
 		if (error) {
-			timmer = setTimeout(() => {
-				console.error(error)
-			}, 100)
-		}
-
-		return () => {
-			clearTimeout(timmer)
+			console.error(error)
 		}
 	}, [error])
 
